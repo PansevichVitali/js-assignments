@@ -113,6 +113,36 @@ function getZigZagMatrix(n) {
  *
  */
 function canDominoesMakeRow(dominoes) {
+    const dominosCol = [0,0,0,0,0,0,0];
+    for(let i = 0; i < +dominoes.length; i++) {
+        if(dominoes[i][0] === dominoes[i][1]) {
+          dominosCol[dominoes[i][0]] += 100;
+          continue;
+        }
+        if(dominosCol[dominoes[i][0]] === 0 || dominosCol[dominoes[i][0]] === 100) {
+          if(dominosCol[dominoes[i][0]] === 100)
+            dominosCol[dominoes[i][0]] -= 100;
+          dominosCol[dominoes[i][0]]++;
+        }
+        else 
+          dominosCol[dominoes[i][0]]--;
+        if(dominosCol[dominoes[i][1]] === 0 || dominosCol[dominoes[i][1]] === 100) {
+          if(dominosCol[dominoes[i][1]] === 100)
+            dominosCol[dominoes[i][1]] -= 100;
+          dominosCol[dominoes[i][1]]++;
+        }
+        else 
+          dominosCol[dominoes[i][1]]--;
+    }
+    let one = 0;
+    let zero = 0;
+    for(let i = 0; i < dominosCol.length; i++) {
+      if (dominosCol[i] === 0)
+        zero++;
+      if (dominosCol[i] === 1 || dominosCol[i] === 101)
+        one++;
+    }
+    return (one === 2 && zero === 5) ? true : false;
     throw new Error('Not implemented');
 }
 
